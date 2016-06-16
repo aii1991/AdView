@@ -45,4 +45,12 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onPause();
     }
+
+    @Override
+    protected void onResume() {
+        if (my_ad_view != null){
+            my_ad_view.onResume();
+        }
+        super.onResume();
+    }
 }
