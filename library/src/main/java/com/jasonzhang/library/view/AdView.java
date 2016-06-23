@@ -35,6 +35,7 @@ public abstract class AdView extends RelativeLayout implements ViewPager.OnPageC
     private ViewPager viewPager;
     private LinearLayout pointGroup;
     private Context context;
+    private static final int MOVE_TO_FIRST = 100;
 
     private final int DEF_POINT_GROUP_MARGIN_BOTTOM = 20; //默认指示点组距离底部距离
     private int pointGroupMarginBottom;
@@ -105,14 +106,19 @@ public abstract class AdView extends RelativeLayout implements ViewPager.OnPageC
             if (adBeans == null){
                 return;
             }
-            if(adBeans.size() == 2){
-                viewPager.setCurrentItem(viewPager.getCurrentItem() == 0 ? 1 : 0);
-            }else {
-                viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
+            if (msg.what == 0){
+                if(adBeans.size() == 2){
+                    viewPager.setCurrentItem(viewPager.getCurrentItem() == 0 ? 1 : 0);
+                }else {
+                    viewPager.setCurrentItem(viewPager.getCurrentItem()+1);
+                }
+                if(isRunning) {
+                    handler.sendEmptyMessageDelayed(0, delayedTimer);
+                }
+            }else if (msg.what == MOVE_TO_FIRST){
+                viewPager.setCurrentItem(0);
             }
-            if(isRunning) {
-                handler.sendEmptyMessageDelayed(0, delayedTimer);
-            }
+
         }
     };
 
@@ -156,9 +162,14 @@ public abstract class AdView extends RelativeLayout implements ViewPager.OnPageC
     public boolean dispatchTouchEvent(MotionEvent ev) {
         gestureDetector.onTouchEvent(ev);
         if(ev.getAction() == MotionEvent.ACTION_UP){
-            if(!isRunning){
-                isRunning = true;
-                handler.sendEmptyMessageDelayed(0, delayedTimer);
+            if (adBeans != null && adBeans.size() <= 1){
+                isRunning = false;
+                handler.sendEmptyMessage(MOVE_TO_FIRST);
+            }else {
+                if(!isRunning){
+                    isRunning = true;
+                    handler.sendEmptyMessageDelayed(0, delayedTimer);
+                }
             }
         }
         return super.dispatchTouchEvent(ev);
@@ -229,7 +240,7 @@ public abstract class AdView extends RelativeLayout implements ViewPager.OnPageC
             addPoint(adBeans.size());
             addImgData();
             viewPager.setAdapter(new AdvertisementAdapter());
-            if (handler != null && !isRefresh){
+            if (handler != null && !isRefresh && isRunning){
                 handler.sendEmptyMessageDelayed(0, delayedTimer);
             }
         } else {
