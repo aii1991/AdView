@@ -236,11 +236,13 @@ public abstract class AdView extends RelativeLayout implements ViewPager.OnPageC
             }
             if(adBeans.size() <= 1){
                 isRunning = false;
+            }else {
+                isRunning = true;
             }
             addPoint(adBeans.size());
             addImgData();
             viewPager.setAdapter(new AdvertisementAdapter());
-            if (handler != null && !isRefresh && isRunning){
+            if ((handler != null && !isRefresh && isRunning) || !handler.hasMessages(0)){
                 handler.sendEmptyMessageDelayed(0, delayedTimer);
             }
         } else {
