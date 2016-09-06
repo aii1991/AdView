@@ -5,7 +5,8 @@
 通用的广告栏控件，轻松实现广告轮播效果。支持无限循环,支持配置自己的图片加载框架。并且智能控制轮播,当手指按下时停止轮播,手指松开时恢复轮播,actiivty onpause停止轮播 onresume时恢复轮播。可自行配置广告滑动动画和指示点样式等。
 # Use
 
-    1.public class MyAdView extends AdView {
+```java
+1.public class MyAdView extends AdView {
         public MyAdView(Context context) {
             super(context);
         }
@@ -23,15 +24,21 @@
                 .into(imageView);
         }
     }
-
-    2.<com.jasonzhang.adview.view.MyAdView
+```
+```xml
+2.<com.jasonzhang.adview.view.MyAdView
         android:id="@+id/my_ad_view"
         android:layout_width="match_parent"
         android:layout_height="250dp" />
-
+```
+    
+```java
     3.my_ad_view = (MyAdView) findViewById(R.id.my_ad_view);
       my_ad_view.setData(getData());
+```
+
 # attr
+```xml
     <declare-styleable name="AdView">
         <!-- 轮播间隔时间 -->
         <attr name="delayed_timer" format="integer"/>
@@ -42,3 +49,4 @@
         <!-- 指示点背景 -->
         <attr name="point_background" format="reference"/>
     </declare-styleable>
+```
