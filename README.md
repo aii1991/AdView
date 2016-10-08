@@ -3,6 +3,19 @@
 ![](https://github.com/aii1991/AdView/blob/master/screenshot/QQ%E5%9B%BE%E7%89%8720160616140326.png)
 # AdView
 通用的广告栏控件，轻松实现广告轮播效果。支持无限循环,支持配置自己的图片加载框架。并且智能控制轮播,当手指按下时停止轮播,手指松开时恢复轮播,actiivty onpause停止轮播 onresume时恢复轮播。可自行配置广告滑动动画和指示点样式等。
+
+# gradle
+
+```gradle
+allprojects {
+    repositories {
+        jcenter()
+        maven { url "https://dl.bintray.com/aii1991/maven" }
+    }
+}
+
+compile 'com.jasonzhang.library:library:0.0.1'
+```
 # Use
 
 ```java
